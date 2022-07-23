@@ -1,0 +1,38 @@
+Capture a Heap Dump Automatically
+All the tools we've shown in the previous sections are intended to capture heap dumps manually at a specific time. In some cases, we want to get a heap dump when a java.lang.OutOfMemoryError occurs to help us investigate the error.
+
+For these cases, Java provides the HeapDumpOnOutOfMemoryError command-line option, which generates a heap dump when a java.lang.OutOfMemoryError is thrown:
+
+java -XX:+HeapDumpOnOutOfMemoryError
+By default, it stores the dump in a java_pid<pid>.hprof file in the directory where we're running the application. If we want to specify another file or directory, we can set it in the HeapDumpPath option:
+
+java -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=<file-or-dir-path>
+When our application runs out of memory using this option, we'll be able to find the created file that contains the heap dump in the logs:
+
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+Dumping heap to java_pid12587.hprof ...
+
+Java has four types of garbage collectors,
+
+Serial Garbage Collector
+Parallel Garbage Collector
+CMS Garbage Collector
+G1 Garbage Collector
+
+Type of Garbage Collector to run
+Option	Description
+-XX:+UseSerialGC	Serial Garbage Collector
+-XX:+UseParallelGC	Parallel Garbage Collector
+-XX:+UseConcMarkSweepGC	CMS Garbage Collector
+-XX:ParallelCMSThreads=	CMS Collector – number of threads to use
+-XX:+UseG1GC	G1 Gargbage Collector
+GC Optimization Options
+Option	Description
+-Xms	Initial heap memory size
+-Xmx	Maximum heap memory size
+-Xmn	Size of Young Generation
+-XX:PermSize	Initial Permanent Generation size
+-XX:MaxPermSize	Maximum Permanent Generation size
+
+
+java -Xmx12m -Xms3m -Xmn1m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar java-application.jar
