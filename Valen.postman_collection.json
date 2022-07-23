@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "e093e9b2-4d25-443d-a83d-baa7a5bf310e",
+		"name": "Valen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21439770"
+	},
+	"item": [
+		{
+			"name": "Token Generation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"UserAccessToken\", json.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "0oa3h231c4uyUOadk1d7",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "s0N7dC-8_cKJfoZwhxQg84i7NXRO-s-O9GVEsnTI",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "Majesco",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/authorization-service/accesstoken",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"authorization-service",
+						"accesstoken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve documentation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/riskreport-api/api/v1/documentation",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"riskreport-api",
+						"api",
+						"v1",
+						"documentation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate a scoring response.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"score\": {\n    \"inputs\": {\n      \"insured\": {\n        \"available_history_1\": \"Y\",\n        \"available_history_2\": \"Y\",\n        \"available_history_3\": \"Y\",\n        \"new_renew_flag\": \"R\",\n        \"non_zero_claim_count_1\": \"0\",\n        \"non_zero_claim_count_2\": \"1\",\n        \"non_zero_claim_count_3\": \"1\",\n        \"original_policy_term_number\": \"01\",\n        \"policy_state_code\": \"IN\",\n        \"policy_zip_code\": \"46051\",\n        \"term_effective_date\": \"2022-04-12\",\n        \"class\": [\n          {\n            \"state_code\": \"IN\",\n            \"class_code\": \"0005\",\n            \"payroll_amount_initial\": \"45000.00\"\n          }\n        ],\n        \"state\": [\n          {\n            \"state_code\": \"IN\",\n            \"experience_mod_factor_initial\": \"1.11\",\n            \"merit_mod_factor_initial\": \"1.01\"\n          }\n        ]\n      }\n    }\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/riskreport-api/api/v1/riskreport/scoring?insuredId=123xyz",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"riskreport-api",
+						"api",
+						"v1",
+						"riskreport",
+						"scoring"
+					],
+					"query": [
+						{
+							"key": "insuredId",
+							"value": "123xyz",
+							"description": "(Required) A unique identifier for the Protective insured."
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"score\": {\n        \"inputs\": {\n            \"insured\": {\n                \"available_history_1\": \"Y\",\n                \"available_history_2\": \"Y\",\n                \"available_history_3\": \"Y\",\n                \"class\": [\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"new_renew_flag\": \"c\",\n                \"original_policy_term_number\": \"temp\",\n                \"policy_state_code\": \"en\",\n                \"policy_zip_code\": \"5 5 \",\n                \"state\": [\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"term_effective_date\": \"2022-04-21\",\n                \"agency\": \"et i\",\n                \"insured_name\": \"occa\",\n                \"non_zero_claim_count_1\": \"commodo officia incididu\",\n                \"non_zero_claim_count_2\": \"dolor\",\n                \"non_zero_claim_count_3\": \"anim voluptate irure\",\n                \"policy_address\": \"ex r\",\n                \"policy_city_name\": \"cupi\",\n                \"reference_group\": \"Ut a\",\n                \"reference_id\": \"exir\",\n                \"reference_source\": \"Ut r\",\n                \"underwriter\": \"dolo\"\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/scoring?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								"scoring"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"info\": {\n  \"score_id\": \"in exercitation eu\",\n  \"score_key\": \"ipsum ut eiusmod\"\n },\n \"outputs\": {\n  \"insured\": {\n   \"final_misclass_bin\": \"dolor\",\n   \"final_risk_bin\": \"minim dolore\",\n   \"loss_ratio_relativity_prediction\": \"ad in nulla sint\"\n  }\n }\n}"
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"score\": {\n        \"inputs\": {\n            \"insured\": {\n                \"available_history_1\": \"Y\",\n                \"available_history_2\": \"Y\",\n                \"available_history_3\": \"Y\",\n                \"class\": [\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"new_renew_flag\": \"c\",\n                \"original_policy_term_number\": \"temp\",\n                \"policy_state_code\": \"en\",\n                \"policy_zip_code\": \"5 5 \",\n                \"state\": [\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"term_effective_date\": \"2022-04-21\",\n                \"agency\": \"et i\",\n                \"insured_name\": \"occa\",\n                \"non_zero_claim_count_1\": \"commodo officia incididu\",\n                \"non_zero_claim_count_2\": \"dolor\",\n                \"non_zero_claim_count_3\": \"anim voluptate irure\",\n                \"policy_address\": \"ex r\",\n                \"policy_city_name\": \"cupi\",\n                \"reference_group\": \"Ut a\",\n                \"reference_id\": \"exir\",\n                \"reference_source\": \"Ut r\",\n                \"underwriter\": \"dolo\"\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/scoring?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								"scoring"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"errorId\": \"27db1720-2d82-0ea6-ece4-93caebce7313\",\n \"message\": \"tem\",\n \"status\": 22899705,\n \"validationErrors\": [\n  {\n   \"name\": \"elit sed\",\n   \"description\": \"non Ut proident\"\n  },\n  {\n   \"name\": \"sit id\",\n   \"description\": \"quis cillum\"\n  }\n ]\n}"
+				},
+				{
+					"name": "Server Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"score\": {\n        \"inputs\": {\n            \"insured\": {\n                \"available_history_1\": \"Y\",\n                \"available_history_2\": \"Y\",\n                \"available_history_3\": \"Y\",\n                \"class\": [\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"class_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"payroll_amount_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"new_renew_flag\": \"c\",\n                \"original_policy_term_number\": \"temp\",\n                \"policy_state_code\": \"en\",\n                \"policy_zip_code\": \"5 5 \",\n                \"state\": [\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    },\n                    {\n                        \"state_code\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"experience_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        },\n                        \"merit_mod_factor_initial\": {\n                            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                        }\n                    }\n                ],\n                \"term_effective_date\": \"2022-04-21\",\n                \"agency\": \"et i\",\n                \"insured_name\": \"occa\",\n                \"non_zero_claim_count_1\": \"commodo officia incididu\",\n                \"non_zero_claim_count_2\": \"dolor\",\n                \"non_zero_claim_count_3\": \"anim voluptate irure\",\n                \"policy_address\": \"ex r\",\n                \"policy_city_name\": \"cupi\",\n                \"reference_group\": \"Ut a\",\n                \"reference_id\": \"exir\",\n                \"reference_source\": \"Ut r\",\n                \"underwriter\": \"dolo\"\n            }\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/scoring?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								"scoring"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"errorId\": \"8eeada1e-dab3-abe0-0ef6-11267a5e5629\",\n \"message\": \"ipsum\",\n \"status\": 46175074\n}"
+				}
+			]
+		},
+		{
+			"name": "Get the scoring results in a PDF file.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/riskreport-api/api/v1/riskreport/:scoreId/pdfreport?insuredId=cons",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"riskreport-api",
+						"api",
+						"v1",
+						"riskreport",
+						":scoreId",
+						"pdfreport"
+					],
+					"query": [
+						{
+							"key": "insuredId",
+							"value": "cons",
+							"description": "(Required) A unique identifier for the Protective insured."
+						}
+					],
+					"variable": [
+						{
+							"key": "scoreId",
+							"value": "106390748",
+							"description": "(Required) The unique scoring identifier provided by Valen."
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/:scoreId/pdfreport?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								":scoreId",
+								"pdfreport"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							],
+							"variable": [
+								{
+									"key": "scoreId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"cons\""
+				},
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/:scoreId/pdfreport?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								":scoreId",
+								"pdfreport"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							],
+							"variable": [
+								{
+									"key": "scoreId"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/riskreport/:scoreId/pdfreport?insuredId=cons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"riskreport",
+								":scoreId",
+								"pdfreport"
+							],
+							"query": [
+								{
+									"key": "insuredId",
+									"value": "cons"
+								}
+							],
+							"variable": [
+								{
+									"key": "scoreId"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	]
+}

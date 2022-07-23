@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "aab41a74-a101-4da2-a7fc-9f11543a5bdc",
+		"name": "CAB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21439770"
+	},
+	"item": [
+		{
+			"name": "Token Generation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"UserAccessToken\", json.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "0oa3h231c4uyUOadk1d7",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "s0N7dC-8_cKJfoZwhxQg84i7NXRO-s-O9GVEsnTI",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "Majesco",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/authorization-service/accesstoken",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"authorization-service",
+						"accesstoken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve documentation Carrier-API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/carrier-api/api/v1/documentation",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"carrier-api",
+						"api",
+						"v1",
+						"documentation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get expanded data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/carrier-api/api/v1/carrier/:dotNumber/expanded",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"carrier-api",
+						"api",
+						"v1",
+						"carrier",
+						":dotNumber",
+						"expanded"
+					],
+					"variable": [
+						{
+							"key": "dotNumber",
+							"value": "70559",
+							"description": "(Required) The DOT number utilized to pull carrier information."
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/carrier/:dotNumber/expanded",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carrier",
+								":dotNumber",
+								"expanded"
+							],
+							"variable": [
+								{
+									"key": "dotNumber"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"scores\": {\n  \"ISS\": {\n   \"score\": 14454800,\n   \"src\": \"amet nisi\"\n  }\n }\n}"
+				},
+				{
+					"name": "Not Found",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/carrier/:dotNumber/expanded",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carrier",
+								":dotNumber",
+								"expanded"
+							],
+							"variable": [
+								{
+									"key": "dotNumber"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"ErrorId\": \"urn:uuid:f6c33c11-cb5e-5280-5a6d-243121f62846\",\n \"Message\": \"minim consectetur dolore enim\",\n \"Status\": -55941688\n}"
+				},
+				{
+					"name": "Server Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/carrier/:dotNumber/expanded",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carrier",
+								":dotNumber",
+								"expanded"
+							],
+							"variable": [
+								{
+									"key": "dotNumber"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"ErrorId\": \"urn:uuid:f6c33c11-cb5e-5280-5a6d-243121f62846\",\n \"Message\": \"minim consectetur dolore enim\",\n \"Status\": -55941688\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a PDF.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{UserAccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://qa.gnpapi.protectiveinsurance.com/carrier-api/api/v1/carrier/:dotNumber/pdfreport",
+					"protocol": "https",
+					"host": [
+						"qa",
+						"gnpapi",
+						"protectiveinsurance",
+						"com"
+					],
+					"path": [
+						"carrier-api",
+						"api",
+						"v1",
+						"carrier",
+						":dotNumber",
+						"pdfreport"
+					],
+					"variable": [
+						{
+							"key": "dotNumber",
+							"value": "70559",
+							"description": "(Required) The DOT number utilized to pull carrier information."
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/carrier/:dotNumber/pdfreport",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carrier",
+								":dotNumber",
+								"pdfreport"
+							],
+							"variable": [
+								{
+									"key": "dotNumber"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "\"mollit\""
+				}
+			]
+		}
+	]
+}
